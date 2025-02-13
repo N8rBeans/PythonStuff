@@ -1,20 +1,81 @@
+class Node:
+	def __init__(self, value):
+		self.value = value
+		self.next = None
+
+	def __str__(self):
+		return str(self.value)
+
 class Stack:
 	def __init__(self):
-		self.items = []
-
-	def isEmpty(self):
-		return len(self.items) == 0
+		"""Initialize an empty stack."""
+		self.top = None
+		self.length = 0
 
 	def push(self, item):
-		self.items.append(item)
+		"""Push an item onto the stack."""
+		newNode = Node(item)
+		# check if stack is empty
+		if(self.length == 0):
+			self.top = newNode
+		else:
+			newNode.next = self.top
+			self.top = newNode
+		self.length += 1
+		return True
 
 	def pop(self):
-		return self.items.pop()
-		raise IndexError("Stack Underflow:")
+		"""Remove and return the top item from the stack. Raise an error if empty."""
+		if (self.length == 0):
+			raise IndexError("Stack Underflow")
+		temp = self.top
+		self.top = self.top.next
+		temp.next = None
+		self.length -= 1
+		if (self.length == 0):
+			self.top = None
+		return temp
 
 	def peek(self):
-		return self.items[-1]
-		raise IndexError("Stack Underflow:")
+		"""Return the top item without removing it. Raise an error if empty."""
+		# check if the stack is empty
+		if (self.length == 0):
+			raise IndexError("Stack Underflow")
+		return self.top
+
+	def is_empty(self):
+		"""Return True if the stack is empty, False otherwise."""
+		return self.length == 0
 
 	def size(self):
-		return len(self.items)
+		"""Return the number of items in the stack."""
+		return self.length
+
+myStack = Stack()
+
+# test error (it works but stops code so its commented)
+#myStack.pop()
+
+# test empty stack
+print(myStack.is_empty())
+# expected: is empty = True
+
+myStack.push(5000)
+myStack.push(4000)
+myStack.push(3000)
+myStack.push(2000)
+myStack.push(1000)
+# expected: 1000, 2000, 3000, 4000, 5000
+
+print(myStack.size())
+print(myStack.is_empty())
+print(myStack.peek())
+# expected: size = 5, is empty = False, peek = 1000
+
+myStack.pop()
+# expected: 2000, 3000, 4000, 5000
+
+print(myStack.size())
+print(myStack.is_empty())
+print(myStack.peek())
+# expected: size = 4, is empty = False, peek = 2000
