@@ -29,7 +29,7 @@ with open('test_data.csv', 'w', newline='') as file:
 	writer = csv.writer(file)
 
 	# write header
-	writer.writerow(["Day", "Temperature"])
+	writer.writerow(["Time", "Distance"])
 
 	# write rows (will follow same (time, distance) format from tuples in data)
 	writer.writerows(data)
